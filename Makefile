@@ -19,6 +19,7 @@ help:
 	@echo "  pickle    to make pickle files"
 	@echo "  json      to make JSON files"
 	@echo "  htmlhelp  to make HTML files and a HTML help project"
+	@echo "  epub       to make an epub"
 	@echo "  latex     to make LaTeX files, you can set PAPER=a4 or PAPER=letter"
 	@echo "  changes   to make an overview over all changed/added/deprecated items"
 	@echo "  linkcheck to check all external links for integrity"
@@ -61,6 +62,12 @@ latex:
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
+epub:
+	mkdir -p .build/epub .build/doctrees
+	$(SPHINXBUILD) -b epub $(ALLSPHINXOPTS) .build/epub
+	@echo
+	@echo "Build finished. The e-Pub book is in .build/epub."
+
 changes:
 	mkdir -p .build/changes .build/doctrees
 	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) .build/changes
@@ -73,3 +80,4 @@ linkcheck:
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in .build/linkcheck/output.txt."
+
