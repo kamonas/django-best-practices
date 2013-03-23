@@ -3,7 +3,7 @@
 Django プロジェクト
 ==============================
 
-core において、Django プロジェクトは セッティングファイル以外のファイル以上のファイルを必要としません。このプラクティスにおいては、大体のプロジェクトが次のような事項から成っています。
+core において、Django プロジェクトはセッティングファイル以外を必要としません。このプラクティスにおいては、大体のプロジェクトが次のような事項から成っています。
 
 * :ref:`projects-settings`
 * :ref:`projects-urls`
@@ -65,7 +65,6 @@ URLconf
 ^^^^^^^^^^^^^^
 
 あなたのプロジェクトの URLconf は、可能であればいつでも、あなたのアプリケーションから URLconf 群をシンプルにインクルードすべきです。そうしておけば、あなたが作ったアプリケーションロジックやプロジェクトを、ポインターとしてシンプルに提供できます。
-Your project URLconf should simply include URLconfs from your applications whenever possible. This keeps your application logic inside your application and your project simply serves as a pointer to it.
 
 .. seealso::
 
