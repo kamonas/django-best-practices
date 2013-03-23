@@ -1,9 +1,9 @@
 .. _projects-index:
 
-Django Projects
-===============
+Django プロジェクト
+==============================
 
-At its core, a Django project requires nothing more than a settings file. In practice, almost every project consists of the following items:
+core において、Django プロジェクトは セッティングファイル以外のファイル以上のファイルを必要としません。このプラクティスにおいては、大体のプロジェクトが次のような事項から成っています。
 
 * :ref:`projects-settings`
 * :ref:`projects-urls`
@@ -15,24 +15,24 @@ At its core, a Django project requires nothing more than a settings file. In pra
 	
 .. _projects-settings:
 	
-Settings
---------
+セッティング
+----------------
 
-The settings module is the only true requirement for a Django project. Typically, it lives in the root of your project as ``settings.py``.
+settings モジュールは Django プロジェクトにおいて必須です。一般的に、 ``settings.py`` という名前で、あなたの作ったプロジェクトのルートに存在します。
 
 .. _projects-settings-multiple:
 
-Handling Settings for Multiple Environments
+複数環境でのセッティングの扱い
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Django's ``startproject`` command gives you a single ``settings.py`` file. If you're new to Django, stick with the single file while you learn the ropes. As you start to deploy production sites and work with more than one developer, you'll realize the benefit in maintaining multiple settings files. For example, you probably want to run with ``DEBUG`` on locally, but not in production.
+Django での ``startproject`` コマンドは ``settings.py`` ファイルを 1 つ作成します。もしあなたが Django に触れて間もない場合、こつこつ学習する間はずっとこのファイルと一緒です。本番サイトのデプロイを始めたり、複数人で開発作業をする際に、複数のセッティングファイルをメンテナンスすることの恩恵を実感することでしょう。例えば、本番ではなく、ローカル環境で、よくある ``DEBUG`` 付きの実行をしたい場合などです。
 
-There are numerous ways to handle multiple settings. Whatever solution you choose, it should meet the following requirements:
+複数セッティングを扱うにはいくつもの方法があります。次に挙げる要件に合わせて、好きな方法を選んでください。
 
-* All the important **settings files are version controlled**. If the settings change on your production site, you'll want to know who made the changes and when they were made.
-* **All settings inherit from a common base**. If you want to add ``django-debug-toolbar`` to your ``INSTALLED_APPS``, you should be able to do it without redefining all your ``INSTALLED_APPS``.
+* 全ての重要な **セッティングファイルは バージョン管理されている** 。 もし本番サイトでセッティングが変わったときは、あなたは誰が、いつ、その変更を加えたのかを知りたいと思うでしょう。
+* **全てのセッティングが common base から継承されている** 。 もしあなたが ``django-debug-toolbar`` を ``INSTALLED_APPS`` に追加したいときは、全ての ``INSTALLED_APPS`` を再定義することなしに、それを行うべきです。
 
-If you don't want to think about it, simply use our Django project template when starting new projects. It is ready to support multiple projects out of the gate::
+もしそういったことを考慮したくない場合は、シンプルに我々の Django プロジェクトテンプレートを、新しくプロジェクトを始めるときに使ってください。そのプロジェクトテンプレートでは、一歩踏み出すための複数プロジェクトをサポートする準備が整っています::
 
     django-admin.py startproject --template=https://github.com/lincolnloop/django-layout/tarball/master -e py,rst,example,gitignore my_project_name
 
@@ -40,12 +40,12 @@ If you don't want to think about it, simply use our Django project template when
 .. seealso:: 
 
 	`Django's Split Settings Wiki <http://code.djangoproject.com/wiki/SplitSettings>`_ 
-		Examples of handling multiple settings
+		複数セッティングを扱う例があります
 
-Handling File Paths
+ファイルパスの扱い
 ^^^^^^^^^^^^^^^^^^^
 
-One function of your settings is to tell Django where to find things such as your static media and templates. Most likely they'll already live inside your project. If so, let Python generate the absolute path names for you. This makes your project portable across different environments.
+あなたのセッティングの一つの機能は、 Django に静的メディアファイルやテンプレートを探す場所を知らせることです。おおよその場合は、それらは既にあなたのプロジェクトの中に存在して使用されています。もしそうであれば、あなたのために Python に絶対パスを生成させてください。こうすることで、異なる環境間でも、あなたのプロジェクトをポータブルに利用することができます。
 
 .. code-block:: python
 	
@@ -59,105 +59,106 @@ One function of your settings is to tell Django where to find things such as you
 URLconf
 --------
 
-By default, you'll find your URLconf in the root of your project as ``urls.py``. It defines how requests should be routed for your project.
+デフォルトでは、あなたのプロジェクトのルートに URLconf を ``urls.py`` という名前で見つけることができるでしょう。これはリクエストがあなたのプロジェクトでどのようにルーティングされるかを定義しています。
 
-Keep it Simple
+シンプルに保つ
 ^^^^^^^^^^^^^^
 
+あなたのプロジェクトの URLconf は、可能であればいつでも、あなたのアプリケーションから URLconf 群をシンプルにインクルードすべきです。そうしておけば、あなたが作ったアプリケーションロジックやプロジェクトを、ポインターとしてシンプルに提供できます。
 Your project URLconf should simply include URLconfs from your applications whenever possible. This keeps your application logic inside your application and your project simply serves as a pointer to it.
 
 .. seealso::
 
 	`Django URL dispatcher documentation <http://docs.djangoproject.com/en/dev/topics/http/urls/#including-other-urlconfs>`_
-		Including other URLconfs
+		URLconf 群をインクルードする例
 		
-Handling URLconfs for Multiple Environments
+複数環境のための URLconf 群の扱い
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Just like your settings module, eventually, you'll come across the need to run different URLconfs for different environments. You may want to use ``admin`` locally, but not once deployed. Django already provides an easy way for you to do this with the `ROOT_URLCONF <http://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf>`_ setting. 
+あなたのセッティングモジュールのように、結局は、異なる URLconf 群にまたがって実行したい場面に出くわすことでしょう。あたなは多分、``admin`` をローカルで使いたいでしょうが、一度デプロイするだけでは終わらないでしょう。Django はこのための簡易な手段を既に提供しており、 `ROOT_URLCONF <http://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf>`_ セッティングを一緒に使うことで実現できます。
 
-This is basically the same scenario as having :ref:`multiple settings <projects-settings-multiple>`. You can use the same solution here::
+これは基本的に、 :ref:`複数セッティング <projects-settings-multiple>` によるものと同じシナリオです。同じことをする、次のような解決法もあります::
 
 	myproject
 	  ...
 	  settings/
 		__init__.py
-		base.py		<-- shared by all environments
+		base.py		<-- 全ての環境で共有される
 		def.py
 		production.py
 	  urls/
 	    __init__.py
-		base.py			<-- shared by all environments
+		base.py			<-- 全ての環境で共有される
 	    dev.py
 	    production.py
 	  ...
 	
 .. seealso:: 
 
-	`Our django-layout template <http://github.com/lincolnloop/django-layout>`_
+	`我々の django-layout テンプレート <http://github.com/lincolnloop/django-layout>`_
 
 
 .. _projects-wsgi:
 
-WSGI File
+WSGI ファイル
 ---------
 
-The WSGI file tells your WSGI server what it needs to do to serve your project on the web. Django's default ``wsgi.py`` is sufficient for most applications.
+WSGI ファイルは、あなたのプロジェクトを web で公開するために必要な情報を WSGI サーバーに教えます。Django のデフォルトの ``wsgi.py`` はおおよそのアプリケーションにとって十分な内容になっています。
 
 .. _projects-applications:
 
-Local Applications
+ローカルアプリケーション
 ------------------
 
-Local applications are Django applications that are domain-specific to your project. They typically live inside the project module and are so closely tied to your project, they would have little use outside of it.
+ローカルアプリケーションは、あなたのプロジェクトにドメイン固有な Django アプリケーションです。それらはおおよそ、プロジェクトモジュールの中に存在しており、あなたのプロジェクトに密に関係しており、その外側ではほとんど利用されないでしょう。
 
-Local vs. Third Party
-^^^^^^^^^^^^^^^^^^^^^
+ローカル vs. サードパーティ
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There are hundreds [#f1]_ of open source Django applications available. Before you reinvent the wheel, make sure somebody hasn't already solved your problem by searching on Google or `Django Packages <http://djangopackages.com>`_. If you find something that will work do **not** put it your project code, instead add it to your :ref:`pip requirements <deployment-bootstrap-packaging>`.
+数百 [#f1]_ のオープンソース Django アプリケーションが利用可能です。車輪の再発明をする前に、既に他の誰かが、あなたが解決しようとしてる問題を解決していないか、 Google または `Django Packages <http://djangopackages.com>`_ で検索し、確認しましょう。 もし解決してくれそうなものを見つけたら、 あなたのプロジェクトコードに書き入れる **のではなく** 、代わりに、あなたの環境の :ref:`pip requirements <deployment-bootstrap-packaging>` に追加しましょう。
 
-.. _tip: If you find something that *mostly* works, but just needs a little polish, consider being a good open source citizen and contributing back to the project or creating a public fork which the project owners can pull from.
+.. _tip: もし *大体は* 動くけど、もうすこし仕上げが必要なものを見つけたら、そのプロジェクトのオーナーがプルできるようにパブリックなフォークを作り、そのプロジェクトに技術還元するような、良いオープンソース市民になることも検討してみると良いでしょう。
 
 .. [#f1] http://djangopackages.com/categories/apps/
 
 
-The Namespace
+名前空間
 ^^^^^^^^^^^^^
 
-How local applications should be imported into your project is a source of ongoing debate in the Django community [#f2]_. Fortunately, with the release of Django 1.4, the default ``manage.py`` no longer changes the ``PYTHONPATH`` [#f3]_, making this much less of an issue.
+ローカルアプリケーションがどのようにあなたのプロジェクトに取り込まれるべきかは、 Django コミュニティ [#f2]_ で継続的に議論されています。幸い Django 1.4 のリリースで、デフォルトの ``manage.py`` は今後はもう ``PYTHONPATH`` [#f3]_ を変更しないので、問題が少なくなりました。
 
-At Lincoln Loop, we put project applications inside the project namespace. This prevents polluting the global namespace and running into potential naming conflicts.
+Lincoln Loop においては、我々はプロジェクトの名前空間内にプロジェクトアプリケーションを入れます。これにより、グローバルの名前空間の汚染を防ぎ、名前が衝突する潜在性を回避します。
 
-.. [#f2] `Discussion on django-developers mailing list regarding project namespaces in the tutorial <http://groups.google.com/group/django-developers/browse_thread/thread/9d7aaae08d6cd75d/007ba460a0852e19>`_
-.. [#f3] `Django 1.4 manage.py changes <https://docs.djangoproject.com/en/1.4/releases/1.4/#updated-default-project-layout-and-manage-py>`_
+.. [#f2] `django-developers メーリングリストでの、チュートリアルにおける、プロジェクトの名前空間についての議論 <http://groups.google.com/group/django-developers/browse_thread/thread/9d7aaae08d6cd75d/007ba460a0852e19>`_
+.. [#f3] `Django 1.4 での manage.py の変更点 <https://docs.djangoproject.com/en/1.4/releases/1.4/#updated-default-project-layout-and-manage-py>`_
 
 .. _projects-templates:
 
-Templates
----------
+テンプレート
+------------------
 
-Location
+場所
 ^^^^^^^^
 
-Templates typically live in one of two places, inside the application or at the root level of a project. We recommend keeping all your templates in the project template directory unless you plan on including your application in multiple projects (or developing it as a open source "reusable" application). In that case, it can be helpful to ship with a set of sample templates in the application, allowing it to work out-of-the-box or serving as an example for other developers.
+テンプレートはおおよそ、2 つの場所、アプリケーションか、プロジェクトのルート階層のうち、どちらかに存在します。我々のおすすめは、あなたが複数のプロジェクトを自分のアプリケーションに含めない限り(または "再利用可能な" オープンソースのアプリケーションとして開発しない限り)、全てのあなたのテンプレートを、プロジェクトのテンプレートディレクトリに保持することです。その場合、アプリケーション中のサンプルテンプレートのセットを含めて公開するのに有用で、その状態のままで動かすこともできますし、他の開発者へのサンプルとして提供することもできます。
 
-Naming
-^^^^^^
+名前付け
+^^^^^^^^^^^^
 
-Django's generic views provide an excellent pattern for naming templates. Following design patterns already found in Django can be helpful for a couple reasons. 
+Django のジェネリックビューはテンプレートに名前付けするための優れたパターンを提供します。Django に既にあるデザインパターンに従うことは、次の 2 つの理由で有用です。 
 
-1. They have been well thought out and tested.
-2. It makes your code immediately understandable to new developers picking up your Django code.
+1. それらは、よく考え抜かれていますし、よくテストもされています
+2. あなたの Django コードを使う新しい開発者にとって、コードを読みやすくします。
 
-Most generic view templates are named in the format::
+大体のジェネリックビューテンプレートは次の形式で名前付けされます::
 
 	[application]/[model]_[function].html
 	
-For example, creating a template to list all of the contacts (``Contact`` model) in my address book (``address_book`` application), I would use the following template::
+例えば、自分の連絡帳 (``address_book`` application) にある全ての連絡先 (``Contact`` model) を表示するリストのテンプレートを作成する際、私は次のテンプレートを使います::
 
 	address_book/contact_list.html
 	
-Similarly, a detail view of a contact would use::
+同じようなものとして、連絡先の詳細ビューでは次のものを使います::
 
 	address_book/contact_detail.html
 	
