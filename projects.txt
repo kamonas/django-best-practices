@@ -161,26 +161,26 @@ Django のジェネリックビューはテンプレートに名前付けする�
 
 	address_book/contact_detail.html
 	
-Not every template you create will map so closely to a single model, however. In those cases, you're on your own for naming, but should still keep your templates in a directory with the same name as your application.
+とは言え、毎回、あなたが作ったテンプレートが、一つ一つのモデルにぴったりと対応付け出来るわけではないでしょう。それらのケースでは、名前付けにおいて、あなた自身で頑張って行かなければいけません。それでも、そのテンプレートは、アプリケーションと同じ名前のディレクトリの中にはあるはずです。
 
-When using inclusion tags or other other functionality to render partial templates, keep them in an ``includes`` directory inside the application template directory. For example, if I had an inclusion tag to render a contact form inside my address book application, I would create a template for it at::
+埋め込みタグや、部分テンプレートをレンダリングするような、その他多くの機能を使う場合は、アプリケーションテンプレートディレクトリ内の ``includes`` ディレクトリにそれらを保持するようにしてください。例として、もし私が、連絡帳アプリケーションの中の連絡用フォームの埋め込みタグを設定しているとしたら、次のようにテンプレートを作ったことでしょう。::
 
 	address_book/includes/contact_form.html
 	
-There is no rule (anymore) that templates must have an ``html`` file extension. If you are rendering something else (plain text, JSON, XML, etc), your templates file extension should match that of the content you are generating.
+テンプレートファイルは必ず ``html`` の拡張子を付けなければいけないという制限は (もはや) ありません。もし何か他のファイル形式 (プレーンテキスト, JSON, XML, その他) をレンダリングする際、あなたのテンプレートファイルの拡張子は、生成するコンテンツの拡張子と一致させておけば良いでしょう。
 
 .. _projects-media:
 
-Static Media
-------------
+静的メディアファイル
+------------------------
 
-Static media encompasses all the non-dynamic content needed for your website: CSS, images, JavaScript, Flash, etc. It comes in two flavors, user-generated content and the media needed to render your site. Best practice dictates that *your* static media lives inside your project and your version control system. Certainly, we don't want stuff our users' uploads to go to the same place. As such, we always use ``django.contrib.staticfiles`` [#django.contrib.staticfiles]_.
+CSS, 画像, JavaScript, Flash などの静的メディア (あなたのサイトに必要な、動的じゃない全てのコンテンツ) は、 ユーザー側で生成されるコンテンツ、それと、あなたのサイトをレンダリングするのに必要なメディアファイル、の 2 つに分けられます。このベストプラクティスは、それらを、あなたのアプリケーションの中にあるもの、それと、バージョン管理システムの中にある *あなたの* 静的メディアファイルのこととして書いています。確かに、自分が抱えるユーザーがアップロードしたものが、一箇所に固るのは我々も望みません。というわけで、我々はいつも ``django.contrib.staticfiles`` [#django.contrib.staticfiles]_ を使います。
 
-In addition to some other slick features, ``staticfiles`` gives you a ``static`` template tag [#static]_ that will properly locate your static files whether they are on your local computer or in a non-local storage on your production system. This leaves ``MEDIA_URL`` and ``MEDIA_ROOT`` to manage user generated content.
+その他の巧妙な機能に加えて、``staticfiles`` は、静的ファイルがローカルマシン上にあったり、本番システム上のローカルじゃないストレージ内にあったりするどちらの場合でも、静的ファイルを適切に設置する ``static`` テンプレートタグ [#static]_ を提供します。この仕組みは、ユーザー生成コンテンツを管理する ``MEDIA_URL`` と ``MEDIA_ROOT`` を残します。
 
 .. seealso::
 
-	`On Static Media and Django <http://lincolnloop.com/blog/2008/nov/13/static-media-and-django/>`_
+	`静的ファイルと Django について <http://lincolnloop.com/blog/2008/nov/13/static-media-and-django/>`_
 
 .. [#django.contrib.staticfiles] https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/
 .. [#static] https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:templatetag-staticfiles-static
