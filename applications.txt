@@ -1,20 +1,20 @@
 .. _apps-index:
 
-Django Applications
-===================
+Django アプリケーション
+======================================
 
-A Django project typically consists of many applications declared in ``INSTALLED_APPS``. Django applications should follow the Unix philosopy of, "Do one thing and do it well." [#unix]_, with a focus on being small and modular, mirroring Django's "loose coupling" design philosophy [#loose-coupling]_.
+Django プロジェクトは大体の場合、``INSTALLED_APPS`` に宣言された数々のアプリケーションから成ります。Django アプリケーションは、小さくあること、モジュール (組立部品) であることにフォーカスした、 Unix の哲学 "一つのことを、うまくやれ (Do one thing and do it well.) "  [#unix]_ に従うべきであり、Django の "ルースカップリング" 設計哲学  [#loose-coupling]_ を反映すべきです。
 
-James Bennett's `Reusable Apps talk <http://www.youtube.com/watch?v=A-S0tqpPga4>`__ at the first DjangoCon is an excellent primer on the subject of building good Django applications.
+最初の DjangoCon での James Bennett による `再利用可能なアプリトーク <http://www.youtube.com/watch?v=A-S0tqpPga4>`__ は、 Django での良いアプリケーションの構築を主題にした、とても良く出来た入門です。
 
 .. [#unix] http://en.wikipedia.org/wiki/Unix_philosophy#McIlroy:_A_Quarter_Century_of_Unix
 .. [#loose-coupling] https://docs.djangoproject.com/en/dev/misc/design-philosophies/#loose-coupling
 
 
-Code Organization
+コード構成
 -----------------
 
-The only requirement of a Django application is that it provides a ``models.py`` file. In practice, however, Django applications are made up of many different files. When building your own applications, follow common file naming conventions. Start with the framework Django provides via ``manage.py startapp <foo>`` and build out from there as needed.
+Django アプリケーションにただ 1 つ必要なものは ``models.py`` ファイルで提供されるものです。ただ、このプラクティスでは、 Django アプリケーションはいくつもの種類が違うファイルから成り立ちます。あなたがアプリケーションをビルドする場合、共通のファイル命名規則に従ってください。 ``manage.py startapp <foo>`` を実行することで Django が提供するフレームワークで開発を始め、必要に応じて増築してください。
 
 * ``__init__.py``
 * ``admin.py``
@@ -32,38 +32,39 @@ The only requirement of a Django application is that it provides a ``models.py``
   * ``__init__.py``
   * ``app_name.py``
 
-* ``tests.py`` or ``tests/``
+* ``tests.py`` または ``tests/``
 * ``urls.py``
 * ``views.py``
 
-What lives in each of these files should be self-explanatory. Let's dive into some of the meatier ones though.
 
-Models
-------
+これらのファイルの中で動かすものは、一つ一つが一見して、それが何なのかすぐに分かるものであるべきです. さぁ、始めましょう。(Let's dive into some of the meatier ones though.)
 
-Style
-^^^^^
+モデル
+------------
 
-Follow Django's `defined conventions <https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style>`__ for model code.
+スタイル
+^^^^^^^^^^
 
-Make 'em Fat
-^^^^^^^^^^^^
+モデルのコードは Django の `決定済み規約 <https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style>`__ に従いましょう。
 
-A common pattern in MVC-style programming is to build thick/fat models and thin controllers. For Django this translates to building models with lots of small methods attached to them and views which use those methods to keep their logic as minimal as possible. There are lots of benefits to this approach.
+モデルは太らせましょう
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. **DRY**: Rather than repeating the same logic in multiple views, it is defined once on the model.
-2. **Testable**: Breaking up logic into small methods on the model makes your code easier to unit test.
-3. **Readable**: By giving your methods friendly names, you can abstract ugly logic into something that is easily readable and understandable.
+MVC-スタイルプログラミングでの共通パターンは、太ったモデルと痩せたコントローラーを構築するものです。Django ではこれを次のように読み替えます。自身に関係する沢山の小さなメソッドを持ったモデルの構築、モデルに付随するメソッドを使い、自身では可能な限りミニマルなロジックを保つビューです。このアプローチには多くの利点があります。
 
-For a good example of a fat model in Django, look at |the definition of django.contrib.auth.models.User|_.
+1. **DRY**: 複数のビューに同じロジックを繰り返し書くより、モデル内に一度だけ定義。
+2. **テスト可能**: モデルのロジックを小さなメソッドに切り出していくことで、あなたのコードがユニットテストしやすくなる。
+3. **読みやすさ**: あなたのメソッドに分かりやすい名前を付けることで、ひどいロジックを、読みやすくて分かりやすいものにまとめられる。
 
-.. |the definition of django.contrib.auth.models.User| replace:: the definition of ``django.contrib.auth.models.User``
-.. _the definition of django.contrib.auth.models.User: https://github.com/django/django/blob/ff6ee5f06c2850f098863d4a747069e10727293e/django/contrib/auth/models.py#L225-404
+Django における太ったモデルの良い例としては、 |django.contrib.auth.models.User の内容|_ を参照してください。
+
+.. |django.contrib.auth.models.User のコード| replace:: ``django.contrib.auth.models.User`` のコード
+.. _django.contrib.auth.models.User のコード: https://github.com/django/django/blob/ff6ee5f06c2850f098863d4a747069e10727293e/django/contrib/auth/models.py#L225-404
 
 Managers
---------
+----------------
 
-Similar to models, it's good practice to abstract common logic into methods on a manager. More specifically, you'll probably want a chainable method that you can use on any queryset. This involves some boilerplate that I always forget, so here's an example for (mostly) cutting and pasting::
+モデルに似て、共通のロジックをマネージャーの中にまとめるのも良いやり方です。より具体的に言うと、多分、あなたは、クエリセットとして使えるようなチェーンメソッドが欲しくなるでしょう。これは私がいつも忘れるボイラープレートを含みます。ここに (ほぼ) コピー・アンド・ペーストした例を記載します ::
 
     import datetime
     from django.db import models
@@ -71,7 +72,7 @@ Similar to models, it's good practice to abstract common logic into methods on a
 
     class PostQuerySet(QuerySet):
         def live(self):
-            """Filter out posts that aren't ready to be published"""
+            """公開の準備が出来てない投稿をフィルタリングする"""
             now = datetime.datetime.now()
             return self.filter(date_published__lte=now, status="published")
 
@@ -79,13 +80,13 @@ Similar to models, it's good practice to abstract common logic into methods on a
         def get_query_set(self):
             return PostQuerySet(self.model)
         def __getattr__(self, attr, *args):
-            # see https://code.djangoproject.com/ticket/15062 for details
+            # 詳しくは https://code.djangoproject.com/ticket/15062 を参照
             if attr.startswith("_"):
                 raise AttributeError
             return getattr(self.get_query_set(), attr, *args)
 
     class Post(models.Model):
-        # field definitions...
+        # フィールド定義
         objects = PostManager()
 
 This code will let you call our new method `live` both directly on the manager ``Post.objects.live()`` and chain it on a queryset ``Post.objects.filter(category="tech").live()``. At the time of writing, there is `an open bug <https://code.djangoproject.com/ticket/16748>`__ to make this less painful.

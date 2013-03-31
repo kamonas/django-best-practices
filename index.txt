@@ -6,14 +6,14 @@ Django ベストプラクティス
 
 これは `Django ウェブフレームワーク <http://www.djangoproject.com>`__ の開発とデプロイにおけるベストプラクティスとして、随時更新されるドキュメントです。これらは Django で作業する上での、*正しい* やりかた、*唯一の* やり方を指南するものではありません。その代わり、我々が何年にも渡りこのフレームワークを使い磨いてきたベストプラクティスではあります。
 
-It is a fork of the great `django-reusable-app-docs project <http://github.com/ericholscher/django-reusable-app-docs>`__ started by `Brian Rosner <http://oebfare.com>`__ and `Eric Holscher <http://ericholscher.com>`_ regarding best practices for writing and maintaining reusable Django apps.
+そしてこれは、`Brian Rosner <http://oebfare.com>`__ と `Eric Holscher <http://ericholscher.com>`_ によって、再利用可能な Django アプリケーションを書き、保守するためのベストプラクティスにとして始められた、偉大な `django-reusable-app-docs project <http://github.com/ericholscher/django-reusable-app-docs>`__ のフォークです。
 
-.. note:: The source code for this documentation lives on GitHub as `django-best-practices <http://github.com/lincolnloop/django-best-practices>`__ and can be built in a number of formats using `Sphinx <http://sphinx.pocoo.org>`__.
+.. note:: このドキュメントのソースコードは GitHub 上の `django-best-practices <http://github.com/lincolnloop/django-best-practices>`__ にあり、 `Sphinx <http://sphinx.pocoo.org>`__ を使うことでいくつものフォーマットでビルド可能です。
 
-Feedback
---------
+フィードバック
+----------------
 
-See a problem? Disagree with something? Want to see other topics covered? **We'd love to hear your feedback!** `Email us <mailto:info@lincolnloop.com>`__ or `file an issue <https://github.com/lincolnloop/django-best-practices/issues>`__.
+問題を見つけたら？納得いかないことがあったら？触れられていないトピックについて見たかったら？ **我々はあなたからのフィードバックを歓迎します！** 次の方法でお願いします。 `Email us <mailto:info@lincolnloop.com>`__ (ヤク中: 英語で) または `イシューの提出 <https://github.com/lincolnloop/django-best-practices/issues>`__.
 
 
 Table of Contents
