@@ -57,4 +57,4 @@ Gunicorn は軽量 WSGI サーバーです。これは高トラフィックス�
 
 これをファイルとして ``/etc/init/gunicorn.conf`` に保存し ``sudo start gunicorn`` を実行してください。 トラブルシューティングのために、 あなたのログは ``/var/log/upstart/gunicorn.log`` で見れるようになっていると思います。
 
-.. note:: `スーパーバイザー <http://supervisord.org/>`__ は、 Python のみで書かれていて、もしあなたが ``upstart`` にアクセスできない場合の選択肢です。
+.. note:: `Supervisor <http://supervisord.org/>`__ は、 Python のみで書かれていて、もしあなたが ``upstart`` にアクセスできない場合の選択肢です。
