@@ -1,25 +1,25 @@
 .. _deployment-servers:
 
-Servers
-=======
+サーバー
+==============
 
-.. note:: Deployment arcitectures vary widely depending on the needs and traffic of the site. The setup described below is minimally configured and works well for most instances.
+.. note:: デプロイの考え方 (アーキテクチャー) は何が必要かとサイトのトラフィックに広く依存します。下記のセットアップについての記述は、最低限の設定であり、大体のインスタンスではうまく動きます。
 
-We serve Django on Ubuntu Linux with a PostgreSQL database backend via `gunicorn <http://www.gunicorn.org>`__ or `uWSGI <http://projects.unbit.it/uwsgi>`__ from behind an `Nginx <http://nginx.net>`__ frontend proxy. For simplicity, we'll only be discussing Gunicorn/Nginx here.
+我々は、フロントエンドプロキシ `Nginx <http://nginx.net>`__ の裏で `gunicorn <http://www.gunicorn.org>`__ または `uWSGI <http://projects.unbit.it/uwsgi>`__ を経由して、PostgreSQL データベースバックエンドと一緒に Ubuntu Linux 上で Django を動かします。便宜上、ここでは Gunicorn/Nginx のみ取り扱います。
 
 .. index:: Nginx
 
 Nginx
 -----
 
-`Nginx <http://nginx.net>`__ makes for a great frontend server due to its speed, stability and low resource footprint. The typical Nginx configuration for a site looks like this:
+`Nginx <http://nginx.net>`__ はそのスピード、安定性、少ないリソース・フットプリントから優秀なフロントエンドサーバーを形成します。サイトのためのよくある Nginx の設定は次のようになります:
 
 .. literalinclude:: /examples/nginx.conf
     :language: nginx
     
-.. rubric:: What Does it Do?
+.. rubric:: それは何をしますか ?
 
-The first block tells Nginx where to find the server hosting our Django site. The second block redirects any request coming in on ``www.domain.com`` to ``domain.com`` so each resource has only one canonical URL. The final section is the one that does all the work. It tells Nginx to check if a file matching the request exists in ``/var/www/domain.com``. If it does, it serves that file, if it doesn't, it proxies the request to the Django site.
+最初のブロックは Nginx に我々の Django サイトをホスティングするサーバーをどこに探せば良いか知らせます。二番目のブロックは ``www.domain.com`` に来るどんなリクエストも ``domain.com`` にリダイレクトさせます。従って、各リソースは、canonical URL をただ1つ持つことになります。最後のセクションは、全ての処理についてのものです。この記述は、 ``/var/www/domain`` 内のファイルにリクエストがマッチするかを Nginx にチェックさせます。もしマッチすれば、ファイルが送出され、もしマッチしなければ、 Django サイトへリクエストを中継します。
 
 .. index:: 
     pair: Nginx; SSL
@@ -27,34 +27,34 @@ The first block tells Nginx where to find the server hosting our Django site. Th
 SSL
 ^^^
 
-Another benefit to running a frontend server is SSL termination. Rather than having two Django instances running for SSL and non-SSL access, we can have Nginx act as the gatekeeper redirecting all requests back to a single non-SSL WSGI instance listening on the ``localhost``. Here's what that would look like:
+フロントエンドサーバーを走らせる、その他の恩恵としては、SSL のターミネーションです。 SSL アクセスと 非 SSL アクセスで走らせる Django インスタンスを 2 つ持つよりも、 ``localhost`` 上でリッスンしている単一の非 SSL の WSGI インスタンスに、全てのリクエストをリダイレクトして返すゲートキーパーとして振る舞う Nginx を選択します。ここにどのようなものになるかを記載します:
 
 .. literalinclude:: /examples/nginx_ssl.conf
     :language: nginx
     
-You can include this code at the bottom of your non-SSL configuration file.
+非 SSL 設定ファイルの末尾に、このコードを入れることもできます。
 
 .. index:: Gunicorn
 
 Gunicorn
 --------
 
-Gunicorn is a lightweight WSGI server that can scale from small deploys to high-traffic sites. You can install it via ``pip install gunicorn``. Since Nginx will be listening for HTTP(S) requests, you'll need to bind Gunicorn to a different port. While you're at it, you can tell it to only respond to the ``localhost``. A simple gunicorn process might look like this:
+Gunicorn は軽量 WSGI サーバーです。これは高トラフィックスサイト用にも小さなデプロイからスケールすることができます。 ``pip install gunicorn`` からインストールできます。 Nginx は HTTP(S) でリッスンするので、 Gunicorn には違うポートをバインドする必要があるでしょう。 その状態でなら、あなたは ``localhost`` への応答だけを教えてあげるだけです。単純な gunicorn プロセスは次のようになります:
 
 .. sourcecode:: bash
 
     $ gunicorn --workers=4 --bind=127.0.0.1:9000 my_project.wsgi:application
 
-This spawns a gunicorn process with 4 workers listening on http://127.0.0.1:9000. If your project doesn't already have a ``wsgi.py`` file, you'll want to add one. See `the Django WSGI docs <https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/#the-application-object>`__ or `django-layout <https://github.com/lincolnloop/django-layout/blob/master/project_name/wsgi.py>`__ for an example.
+これは gunicorn のプロセスを、 http://127.0.0.1:9000 でリッスンする 4 つの worker で生成します。 もしあなたのプロジェクトにまだ ``wsgi.py`` ファイルがなければ、そのファイルを加えたいと思うでしょう。 `the Django WSGI docs <https://docs.djangoproject.com/en/dev/howto/deployment/wsgi/#the-application-object>`__ または `django-layout <https://github.com/lincolnloop/django-layout/blob/master/project_name/wsgi.py>`__ を例として参照してください。
 
-Process Management
-^^^^^^^^^^^^^^^^^^
+プロセス・マネジメント
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You want to be sure that gunicorn is always running and that it starts up automatically after a server reboot. If you are deploying to Ubuntu, ``upstart`` is probably the easiest way to get started. Here is a sample config:
+あなたは gunicorn が常に走っていて、サーバーの再起動時にも自動的に立ち上がることを確かなものにしたいでしょう。 もし Ubuntu にデプロイするなら、 ``upstart`` はおそらく、その最初として最も簡単な方法です。ここにサンプルの設定を記載します:
 
 .. literalinclude:: /examples/upstart.conf
     :language: bash
 
-Save this file to ``/etc/init/gunicorn.conf`` and run ``sudo start gunicorn``. For troubleshooting, your logs will be visible at ``/var/log/upstart/gunicorn.log``.
+これをファイルとして ``/etc/init/gunicorn.conf`` に保存し ``sudo start gunicorn`` を実行してください。 トラブルシューティングのために、 あなたのログは ``/var/log/upstart/gunicorn.log`` で見れるようになっていると思います。
 
-.. note:: `Supervisor <http://supervisord.org/>`__ is a pure Python option if you don't have access to ``upstart``.
+.. note:: `スーパーバイザー <http://supervisord.org/>`__ は、 Python のみで書かれていて、もしあなたが ``upstart`` にアクセスできない場合の選択肢です。

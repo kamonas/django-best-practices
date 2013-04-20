@@ -1,10 +1,10 @@
 .. _apps-documentation:
 
 
-Documentation
-=============
+ドキュメンテーション
+==========================
 
 
-+ Placed in a docs directory at the same level as the APP directory
-  (you do have a top-level directory above your app, right?)
-+ Can contain templates, for reference
++ APP ディレクトリと同じ階層の docs ディレクトリのに設置してください。
+  (app の上に、トップレベルディレクトリがあります。そうですよね ?)
++ リファレンスのために、テンプレートを含めても良いです。

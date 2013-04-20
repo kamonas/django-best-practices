@@ -1,18 +1,18 @@
 .. _deployment-bootstrap:
 
-Project Bootstrapping
-=====================
+プロジェクト・ブートストラッピング
+==========================================
 
 .. index:: virtualenv, pip
 
-Filesystem Layout
------------------
+ファイルシステムのレイアウト
+----------------------------------
 
-.. note:: This document is heavily biased towards Unix-style filesystems and may require additional effort to use in other operating systems.
+.. note:: このドキュメントは Unix-スタイル にかなり偏っているので、他のオペレーティングシステム上で同じ事をやるには少し余計に頑張りが必要とするかも知れません。
 
-`Virtualenv <http://pypi.python.org/pypi/virtualenv>`_ is a must for Python projects. It provides a method to isolate different Python environments. We typically host our production sites from ``/opt/webapps/<site_name>`` and our development sites from ``~/webapps/<site_name>``. Each individual project gets its own ``virtualenv`` that also serves as the directory for all the source files associated with the project. We use ``pip`` to populate the ``virtualenv`` with the necessary packages.
+`Virtualenv <http://pypi.python.org/pypi/virtualenv>`_ は Python projects に必須です。 これは異なる Python 環境を独立させる方法を提供します。 我々は慣例的に本番サイトを ``/opt/webapps/<site_name>`` で、開発用サイトを ``~/webapps/<site_name>`` でホストします。 それぞれのプロジェクトは個別に、それぞれの ``virtualenv`` を取得し、それはプロジェクトに関連付けられた全てのソースファイルの含んだディレクトリとしても提供されます。 我々は ``virtualenv`` に必要なパッケージを追加するのに ``pip`` を使います。
 
-The bootstrap process looks like this:
+ブートストラップ・プロセスは次のようになります:
 
 .. sourcecode:: bash
 
@@ -23,19 +23,19 @@ The bootstrap process looks like this:
     pip install -r path/to/requirements.txt
     
     
-.. tip:: For convenience, you can use `virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_ which provides some helpers to make working with virtualenvs more friendly.
+.. tip:: より快適な作業のために、 `virtualenvwrapper <http://www.doughellmann.com/projects/virtualenvwrapper/>`_ を使うのも良いでしょう。これは複数の virtualenv での作業に便利なヘルパーを提供しています。
 
 .. index:: pip, requirements.txt
 
 .. _deployment-bootstrap-packaging:
 
-Packaging
----------
+パッケージング
+------------------
 
-One of the keys to successful deployment is to ensure that the software you develop on is as close as possible to the software you deploy on. `Pip <http://www.pip-installer.org/>`_ provides a simple repeatable method allowing you to consistently deploy Python projects across many machines. Every application that requires third-party libraries should include a `pip requirements file <http://www.pip-installer.org/en/latest/requirements.html>`_ called ``requirements.txt``. Projects should aggregate the application requirements files adding any additional requirements as needed.
+成功する開発の鍵の 1 つは、あなたが開発するソフトウェアを、あなたがデプロイするソフトウェアとできるだけ近くにするべきである、ということです。 `Pip <http://www.pip-installer.org/>`_ は複数のマシンをまたいで Python のプロジェクトを堅実にデプロイできる、シンプルで何度も繰り返せる方法を提供します。 サードパーティ・ライブラリを必須とする全てのアプリケーションは ``requirements.txt`` と呼ばれる `pip requirements file <http://www.pip-installer.org/en/latest/requirements.html>`_ を含むべきです。 プロジェクトはアプリケーションに必須なファイル、さらに必要に応じて追加で必須になるファイルを集合させておくべきです。
 
-.. rubric:: What to include in your requirements files
+.. rubric:: 何をあなたの必須ファイルに含めるか
 
-In short, everything. While your operating system may provide some Python packages, nearly everything can be installed cleanly with ``pip`` these days. By installing everything into your virtualenv, you can isolate your environment and prevent system packages from causing version conflicts.
+つまり、全部です。あなたのオペレーティングシステムが Python パッケージ群を提供するであろう間は、最近は ``pip`` によりおよそ全てがクリーンにインストールされます。 あなたの virtualenv に全てがインストールされることで、環境が独立されて、システムパッケージにバージョンのコンフリクトが起きることを防ぎます。
 
-.. warning:: **Pin your dependencies!** Pip makes it easy to install from a VCS, or just grab whatever version it finds on PyPI. This also makes it easy for your deployments to have different versions of different libraries which can lead to unexpected results. Make sure you specify a version for PyPI libs or a specific commit/tag for VCS checkouts. Examples: ``django==1.4.1`` or ``-e git+https://github.com/toastdriven/django-tastypie.git@v0.9.9#egg=django-tastypie``
+.. warning:: **依存関係を押さえておいてください!** Pip は VCS からのインストールを簡単にします。そうすれば、PyPI 上で見つかるどのバージョンも取ってくるだけで済みます。またこうすることで、不測の事態を起こすような異なるライブラリの異なるバージョンを含んだデプロイが簡単になります。 VCS でのチェックアウトのために、 PyPI ライブラリ群のバージョン、または、コミット／タグをしっかりと特定しておいてください。 例: ``django==1.4.1`` または ``-e git+https://github.com/toastdriven/django-tastypie.git@v0.9.9#egg=django-tastypie``

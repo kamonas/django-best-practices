@@ -1,18 +1,21 @@
 .. _apps-distribution:
 
-How do I distribute my app?
-===========================
+どうやって作ったアプリを配布しますか？
+======================================================
 
-Django should be using the standard `Python Package Index
-<http://pypi.python.org/pypi>`__ aka PyPI or the Cheese Shop. Eric Holscher wrote
-a `tutorial <http://ericholscher.com/blog/2008/aug/6/easily-packing-
-and-distributing-django-apps-setupt/>`__ about how to easily package
-and upload your app to PyPI. All reusable apps should be uploading to
-PyPI.
+Django には、 PyPI または Cheese Shop の名前で知られる定番の `Python パッケージインデックス
+<http://pypi.python.org/pypi>`__  を使うべきです。 Eric Holscher が
+ `tutorial <http://ericholscher.com/blog/2008/aug/6/easily-packing-
+and-distributing-django-apps-setupt/>`__ に、どのようにサクッとアプリをパッケージ化して、
+PyPI にアップロードするかを書きました。再利用性のあるアプリは全て
+ PyPI にアップロードするべきです。
 
-If you upload your app to PyPI, it is generally a good idea to prefix
-your project name with "django-"
+もし作ったアプリを PyPI にアップロードしたら、
+あなたのプロジェクトの名前に "django-" のプレフィックスを付けるのは一般的で良い考えです。
 
+また留意事項として、なにかのファイルをデフォルトの場所で参照する際、その様な状況にあるとき、
+それはまた、あなたがディレクトリを同じ名前で作れることを意味します。つまり、python の標準のように。
+(未翻訳)
 Also note, that when below when we refer to the default place for
 something as a file, that also means that you can make a directory of
 that same name; as per normal python.

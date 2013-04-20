@@ -5,8 +5,8 @@
    pair: Django; Coding Conventions
 
 
-Coding Style
-============
+コーディングスタイル
+========================
 
 一般的に、コードはクリーンで簡潔で、読みやすくあるべきです。 `The Zen of Python (PEP 20) <http://www.python.org/dev/peps/pep-0020/>`_ は Python のベスト・コーディング・プラクティスのための優れた序章です。
 
