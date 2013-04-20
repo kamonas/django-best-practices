@@ -13,7 +13,7 @@ Django ベストプラクティス
 フィードバック
 ----------------
 
-問題を見つけたら？納得いかないことがあったら？触れられていないトピックについて見たかったら？ **我々はあなたからのフィードバックを歓迎します！** 次の方法でお願いします。 `Email us <mailto:info@lincolnloop.com>`__ (ヤク中: 英語で) または `イシューの提出 <https://github.com/lincolnloop/django-best-practices/issues>`__.
+問題を見つけたら？納得いかないことがあったら？触れられていないトピックについて見たかったら？ **我々はあなたからのフィードバックを歓迎します！** 次の方法でお願いします。 `Email us <mailto:info@lincolnloop.com>`__ (英語) または `イシューの提出 <https://github.com/lincolnloop/django-best-practices/issues>`__.
 
 
 Table of Contents
