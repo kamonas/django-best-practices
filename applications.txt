@@ -47,7 +47,7 @@ Django アプリケーションにただ 1 つ必要なものは ``models.py`` �
 
 モデルのコードは Django の `決定済み規約 <https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/#model-style>`__ に従いましょう。
 
-モデルは太らせましょう
+モデルを太らせましょう
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 MVC-スタイルプログラミングでの共通パターンは、太ったモデルと痩せたコントローラーを構築するものです。Django ではこれを次のように読み替えます。自身に関係する沢山の小さなメソッドを持ったモデルの構築、モデルに付随するメソッドを使い、自身では可能な限りミニマルなロジックを保つビューです。このアプローチには多くの利点があります。
@@ -61,7 +61,7 @@ Django における太ったモデルの良い例としては、 |django.contrib
 .. |django.contrib.auth.models.User のコード| replace:: ``django.contrib.auth.models.User`` のコード
 .. _django.contrib.auth.models.User のコード: https://github.com/django/django/blob/ff6ee5f06c2850f098863d4a747069e10727293e/django/contrib/auth/models.py#L225-404
 
-Managers
+マネージャー
 ----------------
 
 モデルに似て、共通のロジックをマネージャーの中にまとめるのも良いやり方です。より具体的に言うと、多分、あなたは、クエリセットとして使えるようなチェーンメソッドが欲しくなるでしょう。これは私がいつも忘れるボイラープレートを含みます。ここに (ほぼ) コピー・アンド・ペーストした例を記載します ::
@@ -89,4 +89,4 @@ Managers
         # フィールド定義
         objects = PostManager()
 
-This code will let you call our new method `live` both directly on the manager ``Post.objects.live()`` and chain it on a queryset ``Post.objects.filter(category="tech").live()``. At the time of writing, there is `an open bug <https://code.djangoproject.com/ticket/16748>`__ to make this less painful.
+このコードにより、 ``Post.objects.live()`` とクエリセットを使ってメソッドチェーン化した ``Post.objects.filter(category="tech").live()`` の両方のマネージャーから、新たなメソッド `live` を直接コールすることができます。コードを書く際には `an open bug <https://code.djangoproject.com/ticket/16748>`__ を見ると手間を減らせると思います。
