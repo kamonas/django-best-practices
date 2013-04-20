@@ -8,10 +8,8 @@
 Coding Style
 ============
 
-In general, code should be clean, concise and readable. `The Zen of Python (PEP 20) <http://www.python.org/dev/peps/pep-0020/>`_ is a great introduction to best coding practices for Python.
+一般的に、コードはクリーンで簡潔で、読みやすくあるべきです。 `The Zen of Python (PEP 20) <http://www.python.org/dev/peps/pep-0020/>`_ は Python のベスト・コーディング・プラクティスのための優れた序章です。
 
-+ Follow the `Style Guide for Python Code (PEP 8)
-  <http://www.python.org/dev/peps/pep-0008/>`__ as closely as
-  reasonable.
-+ Follow the `Django coding style
-  <https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/>`__.
++ `Python コードのスタイルガイド (PEP 8)
+  <http://www.python.org/dev/peps/pep-0008/>`__ もとても手頃ですので参照してください。
++  `Django コーディングスタイル <https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/>`__ も参照してください。
